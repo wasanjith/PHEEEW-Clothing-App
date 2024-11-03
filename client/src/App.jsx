@@ -10,6 +10,7 @@ import Login from '../src/pages/Login'
 import PlaceHolder from '../src/pages/PlaceHolder'
 import Orders from '../src/pages/Orders'
 import Navbar from '../src/components/Navbar'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path = '/place-holder' element = {<PlaceHolder/>} />
         <Route path = '/orders' element = {<Orders/>} />
       </Routes>
+      <Footer />
     </div>
   )
 }
