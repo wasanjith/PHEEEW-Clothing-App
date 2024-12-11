@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/frontend_assets/assets';
+import RelatedPoducts from '../components/RelatedPoduct';
 
 const Product = () => {
 
@@ -75,6 +76,33 @@ const Product = () => {
              </div>
           </div>
       </div>
+      {/* ------------- Description and review section----------------- */}
+    <div className='mt-20'>
+      <div className='flex'>
+            <b className='border px-5 py-3 text-sm'>Description</b>
+            <p className='border px-5 py-3 text-sm'>Reviews (122)</p>
+      </div>
+       <div className='flex flex-col gap-4 border px-6 py-6  text-sm text-gray-500'>
+        <p>Our Classic Crewneck T-Shirt is a wardrobe essential for every occasion. Crafted from premium, breathable cotton, this t-shirt offers unmatched comfort and durability. Its versatile design makes it perfect for layering or wearing on its own. Available in a variety of colors to suit your unique style.
+
+              Material: 100% organic cotton
+              Fit: Regular fit for all-day comfort
+              Care Instructions: Machine wash cold, tumble dry low
+              Sizes Available: XS, S, M, L, XL, XXL</p>
+        <p>
+        Elevate your everyday look with our Stylish High-Rise Skinny Jeans. Designed to hug your curves and provide a flattering silhouette, these jeans are your go-to for casual outings or dressed-up evenings. Made with a stretchable denim blend, they ensure comfort without compromising on style.
+
+              Material: Premium stretch denim (80% cotton, 18% polyester, 2% spandex)
+              Fit: High-rise waist, skinny through the leg
+              Features: Functional pockets, button closure, and belt loops
+              Care Instructions: Wash inside out, cold wash recommended
+        </p>
+      </div>
+    </div>
+
+    {/* ---------------- Display related product--------------- */}
+
+    <RelatedPoducts category={productData.category} subCategory={productData.subCategory} />
     </div>
   ) : <div className='opacity-0'></div>
 }
