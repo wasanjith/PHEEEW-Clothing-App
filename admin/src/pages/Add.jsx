@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import {assets} from '../assets/admin_assets/assets';
+import axios from 'axios';
+import { backendUrl } from '../App';
 
-const Add = () => {
+const Add = ({token}) => {
 
-  const [image1, setImage1] = useState(false);
-  const [image2, setImage2] = useState(false);
-  const [image3, setImage3] = useState(false);
-  const [image4, setImage4] = useState(false);
+  const [image1, setImage1] = useState(null);
+  const [image2, setImage2] = useState(null);
+  const [image3, setImage3] = useState(null);
+  const [image4, setImage4] = useState(null);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -16,8 +18,35 @@ const Add = () => {
   const [sizes, setSizes] = useState([]);
   const [bestSeller, setBestSeller] = useState(false);
 
+  const onSubmitHandler =  async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+     
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('category', category);
+      formData.append('subCategory', subCategory);
+      formData.append('price', price);
+      formData.append('sizes', JSON.stringify(sizes));
+      formData.append('bestSeller', bestSeller);
+      image1 && formData.append('image1', image1);
+      image2 && formData.append('image2', image2);
+      image3 && formData.append('image3', image3);
+      image4 && formData.append('image4', image4);
+
+      const response = await axios.post(backendUrl + "/api/product/add",formData,{headers:{token}});
+      console.log(response.data);
+      console.log("JWT Token:", token);
+
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
   return (
-    <form className='flex flex-col w-full items-start gap-4'>
+    <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-4'>
         <div>
           <p className='mb-2'>Upload Image</p>
           <div className='flex gap-2'>
@@ -58,7 +87,7 @@ const Add = () => {
           </div>
           <div>
             <p className='mb-2'>Sub Cetegory</p>
-            <select onChange={(e)=>subCategory(e.target.value)} className='w-full max-w-[500px] px-3 py-2 cursor-pointer'>
+            <select onChange={(e)=>setSubCategory(e.target.value)} className='w-full max-w-[500px] px-3 py-2 cursor-pointer'>
               <option value="Topwear">Topwear</option>
               <option value="Bottomwear">Bottomwear</option>
               <option value="Winterwear">Winterwear</option>
@@ -90,10 +119,9 @@ const Add = () => {
           </div>
         </div>
         <div className='flex gap-2 mt-2'>
-          <input onChange={()=> setBestSeller(prev => !prev)} checked={bestSeller} type="checkbox" id='bestseller' />
-          <label className='cursor-pointer ' htmlFor="bestseller"> Add to bestseller</label>
+        <label htmlFor="bestseller" className="flex gap-2 items-center cursor-pointer">
+          <input onChange={() => setBestSeller((prev) => !prev)} checked={bestSeller} type="checkbox" id="bestseller"/>Add to bestseller</label>
         </div>
-
         <button type='submit' className='w-28 py-3 mt-4 bg-black text-white'>ADD</button>
     </form>
   )
