@@ -6,10 +6,10 @@ import { toast } from 'react-toastify';
 
 const Add = ({token}) => {
 
-  const [image1, setImage1] = useState(null);
-  const [image2, setImage2] = useState(null);
-  const [image3, setImage3] = useState(null);
-  const [image4, setImage4] = useState(null);
+  const [image1, setImage1] = useState(false);
+  const [image2, setImage2] = useState(false);
+  const [image3, setImage3] = useState(false);
+  const [image4, setImage4] = useState(false);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -38,6 +38,7 @@ const Add = ({token}) => {
 
       const response = await axios.post(backendUrl + "/api/product/add",formData,{headers:{token}});
       if(response.data.success){
+        console.log(response.data.message);
         toast.success(response.data.message);
         setName("");
         setDescription("");
