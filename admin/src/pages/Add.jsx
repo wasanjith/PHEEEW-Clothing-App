@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {assets} from '../assets/admin_assets/assets';
 import axios from 'axios';
 import { backendUrl } from '../App';
+import { toast } from 'react-toastify';
 
 const Add = ({token}) => {
 
@@ -36,12 +37,22 @@ const Add = ({token}) => {
       image4 && formData.append('image4', image4);
 
       const response = await axios.post(backendUrl + "/api/product/add",formData,{headers:{token}});
-      console.log(response.data);
-      console.log("JWT Token:", token);
+      if(response.data.success){
+        toast.success(response.data.message);
+        setName("");
+        setDescription("");
+        setImage1(null);
+        setImage2(null);
+        setImage3(null);
+        setImage4(null);
+        setPrice("");
+      }else{
+        toast.error(response.data.message);
+      }
 
     } catch (error) {
       console.log(error);
-
+      toast.error(error.message);
     }
   }
 
